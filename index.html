@@ -10,7 +10,7 @@
     .total { font-size: 45px; margin-bottom: 10px; }
     .btn { 
       position: relative;
-      width: 140px; height: 80px; 
+      width: 160px; height: 80px; 
       font-size: 18px; margin: 5px;
     }
     .price{
@@ -38,10 +38,11 @@
       font-size: 18px;
       background: rgb(81, 68, 198);
       color: white;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      line-height: 30px;
+      border-radius: 6px;
+      width: 44px;
+      height: 44px;
+      line-height: 44px;
+      font-size: 24px;
       text-align: center;      
     }
 
@@ -78,7 +79,7 @@
    oninput="calcChange()"
    value="100"
    onfocus="this.select()"
-   style="width:40px">
+   style="width:40px","height:20px">
   00円
 </div>
 <div>お釣り：¥<span id="change">0</span></div>
@@ -151,4 +152,5 @@ function reset() {
 
 </body>
 </html>
+
 
