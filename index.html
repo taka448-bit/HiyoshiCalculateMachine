@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>簡易電卓</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px;
+     }
+    .total { font-size: 45px; margin-bottom: 10px; }
+    .btn { 
+      position: relative;
+      width: 140px; height: 80px; 
+      font-size: 18px; margin: 5px;
+    }
+    .price{
+      display: block;
+      font-size:20px;
+    }
+    .badge {
+     position: absolute;
+     top: 6px;
+     right: 8px;
+     background: crimson;
+     color: white;
+     border-radius: 50%;
+     min-width: 20px;
+     height: 20px;
+     font-size: 12px;
+     line-height: 20px;
+     text-align: center;
+     display: none; /* 0のとき非表示 */
+    }
+    .minus {
+      position: absolute;
+      bottom: 0px;
+      right: 2px;
+      font-size: 18px;
+      background: rgb(81, 68, 198);
+      color: white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;      
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="total">合計：¥<span id="total">0</span></div>
+
+<button class="btn" onclick="add(100,'b100')">100円 <span class="badge" id="b100">0</span>
+<span class="minus" onclick="sub(100,'b100',event)">−</span></button>
+<button class="btn" onclick="add(300,'b300')">300円 <span class="badge" id="b300">0</span>
+<span class="minus" onclick="sub(300,'b300',event)">−</span></button>
+<button class="btn" onclick="add(500,'b500')">500円 <span class="badge" id="b500">0</span>
+<span class="minus" onclick="sub(500,'b500',event)">−</span></button>
+<button class="btn" onclick="add(800,'b800')">800円 <span class="badge" id="b800">0</span>
+<span class="minus" onclick="sub(800,'b800',event)">−</span></button>
+<button class="btn" onclick="add(1000,'b1000')">1000円<span class="badge" id="b1000">0</span>
+<span class="minus" onclick="sub(1000,'b1000',event)">−</span></button>
+<button class="btn" onclick="add(1200,'b1200')">1200円 <span class="badge" id="b1200">0</span>
+<span class="minus" onclick="sub(1200,'b1200',event)">−</span></button>
+<button class="btn" onclick="add(1500,'b1500')">1500円 <span class="badge" id="b1500">0</span>
+<span class="minus" onclick="sub(5000,'b1500',event)">−</span></button>
+<button class="btn" onclick="add(2000,'b2000')">2000円 <span class="badge" id="b2000">0</span>
+<span class="minus" onclick="sub(2000,'b2000',event)">−</span></button>
+
+<hr>
+<div>
+  預かり金額：
+  <input type="number"
+   id="paid" 
+   oninput="calcChange()"
+   value="100"
+   onfocus="this.select()"
+   style="width:40px">
+  00円
+</div>
+<div>お釣り：¥<span id="change">0</span></div>
+
+<button onclick="reset()">取り消し</button>
+
+<script>
+let total = 0;
+const counts = {
+  b100: 0,
+  b300: 0,
+  b500: 0,
+  b800: 0,
+  b1000: 0,
+  b1200: 0,
+  b1500: 0,
+  b2000: 0
+};
+
+function add(price,id) {
+  total += price;
+
+  counts[id]++;
+  const badge = document.getElementById(id);
+  badge.textContent = counts[id];
+  badge.style.display = "inline-block";
+
+  document.getElementById("total").textContent = total;
+  calcChange();
+}
+
+function sub(price, id,event) {
+   event.stopPropagation();
+
+  if (counts[id] === 0) return; // 0以下防止
+
+  counts[id]--;
+  total -= price;
+
+  const badge = document.getElementById(id);
+  badge.textContent = counts[id];
+
+  if (counts[id] === 0) {
+    badge.style.display = "none";
+  }
+
+  document.getElementById("total").textContent = total;
+  calcChange();
+}
+
+function calcChange() {
+  const paid = Number(document.getElementById("paid").value);
+  document.getElementById("change").textContent = paid*100 - total;
+}
+
+function reset() {
+  total = 0;
+  document.getElementById("total").textContent = 0;
+  document.getElementById("paid").value = "100";
+  document.getElementById("change").textContent = 0;
+
+  for (let id in counts) {
+    counts[id] = 0;
+    const badge = document.getElementById(id);
+    badge.textContent = "0";
+    badge.style.display = "none";
+  }
+}
+</script>
+
+</body>
+</html>
